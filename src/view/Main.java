@@ -13,55 +13,57 @@ public class Main {
         int choice;
         do {
             showListMenu();
-            choice = Integer.parseInt(scanner.nextLine());
-            switch (choice) {
-                case 1:
-                    contactManagement.showAllContact();
-                    break;
-                case 2:
-                    System.out.println("Enter number of contact you want to add");
-                    int number = Integer.parseInt(scanner.nextLine());
-                    for (int i = 0; i < number; i++) {
-                        Contact contact = getContact();
-                        contactManagement.addContact(contact);
-                        System.out.println("Successfully added");
-                    }
-                    break;
-                case 3:
-                    System.out.println("Enter phone number you want to edit");
-                    String phoneNumber = scanner.nextLine();
-                    Contact newContact = getContact();
-                    contactManagement.editContact(phoneNumber, newContact);
-                    System.err.println("Successfully edit");
-                    break;
-                case 4:
-                    System.out.println("Enter phone number you want to remove");
-                    phoneNumber = scanner.nextLine();
-                    contactManagement.removeContact(phoneNumber);
-                    break;
-                case 5:
-                    System.out.println("Enter phone number you want to find");
-                    phoneNumber = scanner.nextLine();
-                    contactManagement.findContactByPhoneNumber(phoneNumber);
-                    break;
-                case 6:
-                    System.out.println("Enter full name of contact you want to find");
-                    String fullName = scanner.nextLine();
-                    contactManagement.findContactByFullName(fullName);
-                    break;
-                case 7:
-                    contactManagement.writeFile();
-                    break;
-                case 8:
-                    contactManagement.readFile();
-                    break;
-                case 0:
-                    System.exit(0);
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        contactManagement.showAllContact();
+                        break;
+                    case 2:
+                        System.out.println("Enter number of contact you want to add");
+                        int number = Integer.parseInt(scanner.nextLine());
+                        for (int i = 0; i < number; i++) {
+                            Contact contact = getContact();
+                            contactManagement.addContact(contact);
+                            System.out.println("Successfully added");
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Enter phone number you want to edit");
+                        String phoneNumber = scanner.nextLine();
+                        Contact newContact = getContact();
+                        contactManagement.editContact(phoneNumber, newContact);
+                        System.err.println("Successfully edit");
+                        break;
+                    case 4:
+                        System.out.println("Enter phone number you want to remove");
+                        phoneNumber = scanner.nextLine();
+                        contactManagement.removeContact(phoneNumber);
+                        break;
+                    case 5:
+                        System.out.println("Enter phone number you want to find");
+                        phoneNumber = scanner.nextLine();
+                        contactManagement.findContactByPhoneNumber(phoneNumber);
+                        break;
+                    case 6:
+                        System.out.println("Enter full name of contact you want to find");
+                        String fullName = scanner.nextLine();
+                        contactManagement.findContactByFullName(fullName);
+                        break;
+                    case 7:
+                        contactManagement.writeFile();
+                        break;
+                    case 8:
+                        contactManagement.readFile();
+                        break;
+                    case 0:
+                        System.exit(0);
 
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
             }
         } while (true);
-
-
     }
 
     private static Contact getContact() {
@@ -75,14 +77,8 @@ public class Main {
         } while (!phoneNumber.matches(REGEX_PHONE_NUMBER));
         System.out.println("Enter group of contact");
         String group = scanner.nextLine();
-        String fullName;
-        do {
-            System.out.println("Enter full name");
-            fullName = scanner.nextLine();
-            if (!fullName.matches(REGEX_VALID_CHARACTERS)) {
-                System.err.println("Name is not allowed digit");
-            }
-        } while (!fullName.matches(REGEX_VALID_CHARACTERS));
+        System.out.println("Enter full name of contact");
+        String fullName = scanner.nextLine();
         String gender;
         do {
             System.out.println("Enter gender");
@@ -129,7 +125,7 @@ public class Main {
     }
 
     private static final String REGEX_PHONE_NUMBER = "^[\\d]{10,11}$";
-    private static final String REGEX_VALID_CHARACTERS = "^[A-Za-z]+.$";
+    private static final String REGEX_VALID_CHARACTERS = "^[A-Za-z]+[A-za-z]$";
     private static final String REGEX_VALID_BIRTHDAY = "^[\\d]{1,2}(/)[\\d]{1,2}(/)[\\d]{4}$";
     private static final String REGEX_VALID_EMAIL = "^[_A-Za-z0-9]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 }
